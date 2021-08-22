@@ -5,22 +5,19 @@ package main
 // Test:
 // $ curl -X POST -d "{\"foo\": \"that\"}" http://localhost:8082/test
 
-// still getting "Missing Auth Token"
-// $ curl -X POST -d "{\"foo\": \"that\"}" http://localhost:3000/
-
 import (
 	"encoding/json"
 	"log"
 	"net/http"
 )
 
-type test_struct struct {
+type Payload struct {
 	Foo string
 }
 
 func test(rw http.ResponseWriter, req *http.Request) {
 	decoder := json.NewDecoder(req.Body)
-	var t test_struct
+	var t Payload
 	err := decoder.Decode(&t)
 	if err != nil {
 		panic(err)
@@ -30,5 +27,6 @@ func test(rw http.ResponseWriter, req *http.Request) {
 
 func main() {
 	http.HandleFunc("/test", test)
+	http.HandleFunc("/", test)
 	log.Fatal(http.ListenAndServe(":8082", nil))
 }
