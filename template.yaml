@@ -25,3 +25,4 @@ Resources:
 Outputs:
   Endpoint:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+

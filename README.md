@@ -134,3 +134,4 @@ those resources as well.
 :warning: The `sam` tool will throw a nasty stack trace if you try to view the
 logs before the Lambda function has been invoked. Only run this command after
 you have made requests to the corresponding handlers.
+
