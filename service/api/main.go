@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"io"
 	"log"
 	"net/http"
 
@@ -57,14 +56,4 @@ func main() {
 	RegisterRoutes()
 
 	log.Fatal(gateway.ListenAndServe(":3000", nil))
-}
-
-func DecodePayload(r io.Reader) string {
-	decoder := json.NewDecoder(r)
-	var t Payload
-	err := decoder.Decode(&t)
-	if err != nil {
-		panic(err)
-	}
-	return t.Foo
 }
