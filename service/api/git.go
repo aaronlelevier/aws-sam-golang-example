@@ -1,20 +1,26 @@
 package main
 
 import (
-	"io"
 	"encoding/json"
+	"io"
 )
 
-type Event struct {
-	Action string
+type GithubEventPullRequest struct {
+	Merged bool
+	Url string
 }
 
-func EventAction(r io.Reader) string {
+type GithubEvent struct {
+	Action       string
+	Pull_request GithubEventPullRequest
+}
+
+func DecodeGithubEvent(r io.Reader) GithubEvent {
 	decoder := json.NewDecoder(r)
-	var t Event
-	err := decoder.Decode(&t)
+	var event GithubEvent
+	err := decoder.Decode(&event)
 	if err != nil {
 		panic(err)
 	}
-	return t.Action
+	return event
 }
