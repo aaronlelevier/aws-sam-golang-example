@@ -1,7 +1,14 @@
-package main_test
+package main
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
-func TestHandlers(t *testing.T) {
-
+func TestDecodePayload(t *testing.T) {
+	const jsonSteam = `{"foo": "bar"}`
+	value := DecodePayload(strings.NewReader(jsonSteam))
+	if value != "bar" {
+		t.Fatalf("Want %v Got %v", "bar", value)
+	}
 }

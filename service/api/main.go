@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"io"
 	"log"
 	"net/http"
 
@@ -19,14 +20,14 @@ type MessageResponse struct {
 // WelcomeMessageResponse is the response returned by the / endpoint.
 var WelcomeMessageResponse = MessageResponse{"Welcome to the example API!"}
 
-type test_struct struct {
+type Payload struct {
 	Foo string
 }
 
 // RootHandler is a http.HandlerFunc for the / endpoint.
 func RootHandler(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
-	var t test_struct
+	var t Payload
 	err := decoder.Decode(&t)
 	if err != nil {
 		panic(err)
@@ -56,4 +57,14 @@ func main() {
 	RegisterRoutes()
 
 	log.Fatal(gateway.ListenAndServe(":3000", nil))
+}
+
+func DecodePayload(r io.Reader) string {
+	decoder := json.NewDecoder(r)
+	var t Payload
+	err := decoder.Decode(&t)
+	if err != nil {
+		panic(err)
+	}
+	return t.Foo
 }

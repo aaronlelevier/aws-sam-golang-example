@@ -1,1 +1,9 @@
-this is a nested readme
+# Summary
+
+API docs
+
+## Testing
+
+```
+$ go test -v ./service/api/
+```
